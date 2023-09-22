@@ -72,12 +72,11 @@ function startServerAndCreateNextHandler<
     const headers: Record<string, string> = {};
 
     for (const [key, value] of httpGraphQLResponse.headers) {
-      // dont set it as next appears todo this already.
-      if (key.toLowerCase() === 'content-type') {
-        continue;
-      }
-
       headers[key] = value;
+    }
+
+    if (headers['content-type'].substring(0, 16) === 'application/json') {
+      return Response.json(JSON.parse(body.join('')))
     }
 
     // eslint-disable-next-line consistent-return
