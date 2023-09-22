@@ -72,6 +72,11 @@ function startServerAndCreateNextHandler<
     const headers: Record<string, string> = {};
 
     for (const [key, value] of httpGraphQLResponse.headers) {
+      // dont set it as next appears todo this already.
+      if (key.toLowerCase() === 'content-type') {
+        continue;
+      }
+
       headers[key] = value;
     }
 
